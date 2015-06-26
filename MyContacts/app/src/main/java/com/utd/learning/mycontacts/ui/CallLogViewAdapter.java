@@ -1,7 +1,6 @@
 package com.utd.learning.mycontacts.ui;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.provider.CallLog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -25,10 +24,10 @@ public class CallLogViewAdapter extends RecyclerView.Adapter<CallLogViewAdapter.
     private static final String TAG = CallLogViewAdapter.class.getSimpleName();
     private LayoutInflater inflater;
     private List<CallLogItem> callLogList = Collections.emptyList();
-    private Context context;
+    private Context mContext;
 
     public CallLogViewAdapter(Context context, List<CallLogItem> callLogList) {
-        this.context = context;
+        this.mContext = context;
         inflater = LayoutInflater.from(context);
         this.callLogList = callLogList;
     }
@@ -48,7 +47,7 @@ public class CallLogViewAdapter extends RecyclerView.Adapter<CallLogViewAdapter.
         holder.contactNumber.setText(callLog.getNumber());
         holder.callTime.setText(callLog.getCallTime());
 
-        holder.callType.setTextColor(context.getResources().getColor(R.color.colorGreen));
+        holder.callType.setTextColor(mContext.getResources().getColor(R.color.colorGreen));
         String callType = null;
         switch (callLog.getCallType()) {
             case CallLog.Calls.OUTGOING_TYPE:
@@ -60,7 +59,7 @@ public class CallLogViewAdapter extends RecyclerView.Adapter<CallLogViewAdapter.
 
             case CallLog.Calls.MISSED_TYPE:
                 callType = "MISSED";
-                holder.callType.setTextColor(context.getResources().getColor(R.color.colorRed));
+                holder.callType.setTextColor(mContext.getResources().getColor(R.color.colorRed));
                 break;
         }
         holder.callType.setText(callType);
@@ -81,6 +80,7 @@ public class CallLogViewAdapter extends RecyclerView.Adapter<CallLogViewAdapter.
         TextView callTime;
         TextView callDuration;
         TextView callType;
+        ViewGroup viewGroupStars;
 
         public CallLogViewHolder(View itemView) {
             super(itemView);
@@ -91,11 +91,19 @@ public class CallLogViewAdapter extends RecyclerView.Adapter<CallLogViewAdapter.
             callTime = (TextView) itemView.findViewById(R.id.calledTime);
             callDuration = (TextView) itemView.findViewById(R.id.callDuration);
             callType= (TextView) itemView.findViewById(R.id.callType);
+            viewGroupStars = (ViewGroup) itemView.findViewById(R.id.viewGroupStars);
+            cv.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            Log.d(TAG, "onClick ");;
+            Log.d(TAG, "onClick ");
+            ViewGroup vg = this.viewGroupStars;
+
+            ImageView imageView = new ImageView(mContext);
+            imageView.setImageResource(android.R.drawable.star_on);
+            vg.addView(imageView);
+
         }
     }
 }

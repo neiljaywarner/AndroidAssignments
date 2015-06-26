@@ -48,9 +48,6 @@ public class HomeActivityFragment extends Fragment{
         callLogRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         callLogRecycler.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 
-        animator = callLogRecycler.getItemAnimator();
-        animator.setAddDuration(2000);
-        animator.setRemoveDuration(1000);
 
         return v;
     }

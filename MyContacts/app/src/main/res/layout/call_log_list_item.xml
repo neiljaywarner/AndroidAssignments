@@ -5,6 +5,8 @@
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/contact_card"
+        android:animateLayoutChanges="true"
+
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -80,6 +82,23 @@
                 android:layout_toEndOf="@+id/callerPic"
                 android:layout_below="@+id/calledTime"
                 />
+
+            <LinearLayout
+                android:animateLayoutChanges="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:id="@+id/viewGroupStars"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imageViewStar"
+
+                    android:src="@android:drawable/star_on"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
