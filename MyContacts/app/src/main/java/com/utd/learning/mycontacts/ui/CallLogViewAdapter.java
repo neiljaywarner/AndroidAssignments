@@ -1,7 +1,6 @@
 package com.utd.learning.mycontacts.ui;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.provider.CallLog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +14,7 @@ import android.widget.TextView;
 import com.utd.learning.mycontacts.R;
 import com.utd.learning.mycontacts.model.CallLogItem;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,6 +33,16 @@ public class CallLogViewAdapter extends RecyclerView.Adapter<CallLogViewAdapter.
         this.callLogList = callLogList;
     }
 
+    public static String shuffleString(String string) {
+        List<String> letters = Arrays.asList(string.split(""));
+        Collections.shuffle(letters);
+        String shuffled = "";
+        for (String letter : letters) {
+            shuffled += letter;
+        }
+        return shuffled;
+    }
+
     @Override
     public CallLogViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.call_log_list_item, parent, false);
@@ -43,9 +53,9 @@ public class CallLogViewAdapter extends RecyclerView.Adapter<CallLogViewAdapter.
     @Override
     public void onBindViewHolder(CallLogViewHolder holder, int position) {
         CallLogItem callLog = callLogList.get(position);
-        holder.contactName.setText(callLog.getName());
+        holder.contactName.setText(shuffleString(callLog.getName()));
         holder.contactImage.setImageResource(callLog.getId());
-        holder.contactNumber.setText(callLog.getNumber());
+        holder.contactNumber.setText(shuffleString(callLog.getNumber()));
         holder.callTime.setText(callLog.getCallTime());
 
         holder.callType.setTextColor(context.getResources().getColor(R.color.colorGreen));
@@ -95,7 +105,7 @@ public class CallLogViewAdapter extends RecyclerView.Adapter<CallLogViewAdapter.
 
         @Override
         public void onClick(View v) {
-            Log.d(TAG, "onClick ");;
+            Log.d(TAG, "onClick ");
         }
     }
 }

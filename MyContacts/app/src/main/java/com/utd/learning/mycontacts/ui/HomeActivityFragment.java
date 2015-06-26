@@ -2,15 +2,17 @@ package com.utd.learning.mycontacts.ui;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Bundle;
 import android.provider.CallLog;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.utd.learning.mycontacts.R;
 import com.utd.learning.mycontacts.model.CallLogItem;
@@ -25,38 +27,18 @@ import java.util.List;
 public class HomeActivityFragment extends Fragment{
 
     private static final String TAG = HomeActivityFragment.class.getSimpleName();
-
+    private static final int URL_LOADER = 1;
     private RecyclerView callLogRecycler;
     private CallLogViewAdapter callLogViewAdapter;
     private RecyclerView.ItemAnimator animator;
-    private static final int URL_LOADER = 1;
     private List<CallLogItem> callLogItems;
 
     public HomeActivityFragment() {
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_home, container, false);
-
-        callLogRecycler = (RecyclerView) v.findViewById(R.id.contactsRecyclerView);
-
-        callLogItems = getCallDetails(getActivity().getApplicationContext());
-        callLogViewAdapter = new CallLogViewAdapter(getActivity(), callLogItems);
-        callLogRecycler.setAdapter(callLogViewAdapter);
-        callLogRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
-        callLogRecycler.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-
-        animator = callLogRecycler.getItemAnimator();
-        animator.setAddDuration(2000);
-        animator.setRemoveDuration(1000);
-
-        return v;
-    }
-
     /**
      * Method to get the call log details from the phone
+     *
      * @param context
      * @return
      */
@@ -88,6 +70,27 @@ public class HomeActivityFragment extends Fragment{
         cursor.close();
         return callLogItems;
     }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_home, container, false);
+
+        callLogRecycler = (RecyclerView) v.findViewById(R.id.contactsRecyclerView);
+
+        callLogItems = getCallDetails(getActivity().getApplicationContext());
+        callLogViewAdapter = new CallLogViewAdapter(getActivity(), callLogItems);
+        View imageViewHeader = v.findViewById(R.id.imageViewHeader);
+        Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(this.getActivity(), R.anim.hyperspace_jump);
+        imageViewHeader.startAnimation(hyperspaceJumpAnimation);
+        callLogRecycler.setAdapter(callLogViewAdapter);
+        callLogRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+        callLogRecycler.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+
+
+        return v;
+    }
+
     @Override
     public void onPause() {
         Log.d(TAG, "Fragment paused");
