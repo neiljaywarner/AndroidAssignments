@@ -12,7 +12,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
     private static final String TAG = MyGLRenderer.class.getSimpleName();
     private Triangle mTriangle;
-    private Square mSquare;
 
     // mMVPMatrix is an abbreviation for "Model View Projection Matrix"
     private final float[] mMVPMatrix = new float[16];
@@ -27,7 +26,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
         mTriangle = new Triangle();
-        mSquare = new Square();
 
     }
 
@@ -40,18 +38,12 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
         // Set the camera position (View matrix)
         Matrix.setLookAtM(mViewMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+                //this is like mViewMatrix= ...
 
         // Calculate the projection and view transformation
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
 
-        // Draw square
-        mSquare.draw(mMVPMatrix); //also gets coors for triangles?
-        // Create a rotation for the triangle
 
-        // Use the following code to generate constant rotation.
-        // Leave this code out when using TouchEvents.
-        // long time = SystemClock.uptimeMillis() % 4000L;
-        // float angle = 0.090f * ((int) time);
 
         Matrix.setRotateM(mRotationMatrix, 0, mAngle, 0, 0, 1.0f);
 
